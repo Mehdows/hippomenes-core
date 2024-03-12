@@ -1,0 +1,4 @@
+[target.riscv32i-unknown-none-elf]
+
+[build]
+target = "riscv32i-unknown-none-elf"
