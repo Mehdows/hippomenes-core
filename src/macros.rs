@@ -85,7 +85,7 @@ macro_rules! set {
         }
     };
 }
-
+/*
 macro_rules! set_csr {
     ($(#[$attr:meta])*, $set_field:ident, $e:expr) => {
         $(#[$attr])*
@@ -94,24 +94,7 @@ macro_rules! set_csr {
             _set($e);
         }
     };
-}
-/*
-// set via immediate for fields of len 1
-macro_rules! set_imm_1 {
-    ($csr_number: literal, $offset: expr) => {
-        const _VAL: u8 = 0b1 << $offset;
-        #[inline]
-        fn _set_imm() {
-            unsafe {
-                core::arch::asm!(
-                    concat!("csrrsi x0, ", stringify!($csr_number), ", {_VAL}"),
-                    _VAL = const { Self::_VAL },
-                )
-            }
-        }
-    };
-}
-*/
+}*/
 // set via immediate for fields of len 1
 macro_rules! set_imm_1 {
     ($csr_number: literal, $offset: expr) => {
@@ -143,6 +126,7 @@ macro_rules! clear_imm_1 {
         }
     };
 }
+/*
 macro_rules! clear_csr {
     ($(#[$attr:meta])*, $clear_field:ident, $e:expr) => {
         $(#[$attr])*
@@ -152,7 +136,7 @@ macro_rules! clear_csr {
         }
     };
 }
-
+*/
 macro_rules! read_csr_as_usize {
     ($csr_number:literal) => {
         read_csr!($csr_number);
@@ -167,7 +151,7 @@ macro_rules! read_csr_as_usize {
 
 macro_rules! field_mask {
     ($width: expr, $offset:expr) => {
-        const _MASK: u8 = ((2 ^ $width) - 1) << $offset;
+        const _MASK: u8 = ((2u8.pow($width as u32)) - 1) << $offset;
     };
 }
 
@@ -185,16 +169,7 @@ macro_rules! read_field_as_usize {
 }
 
 macro_rules! set_field {
-    ($csr_number: literal, 1, $offset:expr) => {
-        set_imm_1!($csr_number, $offset);
-
-        #[inline]
-        pub fn set() {
-            unsafe { Self::_set_imm() }
-        }
-    };
-
-    ($csr_number: literal, 2, $offset:expr, $some:ident) => {
+    ($csr_number: literal, 1u8, $offset:expr) => {
         set_imm_1!($csr_number, $offset);
 
         #[inline]
@@ -205,16 +180,7 @@ macro_rules! set_field {
 }
 
 macro_rules! clear_field {
-    ($csr_number: literal, 1, $offset:expr) => {
-        clear_imm_1!($csr_number, $offset);
-
-        #[inline]
-        pub fn clear() {
-            unsafe { Self::_clear_imm() }
-        }
-    };
-
-    ($csr_number: literal, 2, $offset:expr, $some:ident) => {
+    ($csr_number: literal, 1u8, $offset:expr) => {
         clear_imm_1!($csr_number, $offset);
 
         #[inline]
