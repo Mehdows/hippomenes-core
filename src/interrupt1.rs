@@ -20,6 +20,9 @@ pub enum Priority {}
 
 pub struct Bits;
 
+//marker
+pub struct Interrupt1;
+
 impl Bits {
     read_csr_as_usize!(0xB21);
     write_csr_as!(0xB21);

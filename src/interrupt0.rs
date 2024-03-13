@@ -18,6 +18,8 @@ pub enum Enabled {}
 #[address = 0xB20]
 pub enum Priority {}
 
+// marker
+pub struct Interrupt0;
 pub struct Bits;
 
 impl Bits {
