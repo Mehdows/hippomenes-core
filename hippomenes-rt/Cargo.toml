@@ -6,3 +6,4 @@ edition = "2021"
 [dependencies]
 hippomenes-core = {path="../"}
 hippomenes-rt-macros = {path="macros"}
+

@@ -15,6 +15,7 @@ extern "C" {
     fn Interrupt2();
 }
 
+#[allow(non_snake_case)]
 #[no_mangle]
 fn DefaultInterruptHandler() {
     loop {}
