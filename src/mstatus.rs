@@ -15,7 +15,6 @@ pub enum Field {
 #[width = 1]
 #[offset = 3]
 #[address = 0x300]
-//#[offset(1)]
 pub enum MIE {}
 
 pub struct Bits;
@@ -26,5 +25,3 @@ impl Bits {
     set!(0x300);
     clear!(0x300);
 }
-//read_csr_as_usize!(0x300);
-//write_csr_as!(0x300);

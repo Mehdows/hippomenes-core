@@ -177,6 +177,13 @@ macro_rules! set_field {
             unsafe { Self::_set_imm() }
         }
     };
+    ($csr_number: literal, $width: expr, $offset:expr) => {
+        set!($csr_number);
+        #[inline]
+        pub fn set(val: usize) {
+            unsafe { Self::_set((val & (2usize.pow($width as u32) - 1)) << $offset) };
+        }
+    };
 }
 
 macro_rules! clear_field {
