@@ -1,0 +1,8 @@
+[package]
+name = "hippomenes-rt"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+hippomenes-core = {path="../"}
+hippomenes-rt-macros = {path="macros"}

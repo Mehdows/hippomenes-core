@@ -83,7 +83,7 @@ pub fn derive_csr_access(item: proc_macro::TokenStream) -> proc_macro::TokenStre
     }
 
     let enum_ident = input.ident;
-    let output = if width > 1 {
+    let output = if width > 1 && !match_arms.is_empty() {
         quote!(
             impl #enum_ident {
                 #[inline]
@@ -93,6 +93,14 @@ pub fn derive_csr_access(item: proc_macro::TokenStream) -> proc_macro::TokenStre
                     }
                 }
                 read_field_as_usize!(#address_t, #width, #offset);
+            }
+        )
+    } else if width > 1 && match_arms.is_empty() {
+        quote!(
+            //THIS WILL BREAK IF THRESHOLD IS SET MORE THAN ONCE
+            impl #enum_ident {
+                set_field!(#address_t, #width, #offset_t);
+                read_field_as_usize!(#address_t, #width, #offset_t);
             }
         )
     } else {
