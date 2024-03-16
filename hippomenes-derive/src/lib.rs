@@ -24,12 +24,6 @@ pub fn derive_csr_access(item: proc_macro::TokenStream) -> proc_macro::TokenStre
             Err(_) => {}
         }
     }
-    if width_t.is_none() {
-        panic!();
-    }
-    if offset_t.is_none() {
-        panic!("Field offset not specified, expected #[offset = <OFFSET>]")
-    }
     let width_t = width_t.expect("Field width not specified, expected #[width = <WIDTH>]");
     let offset_t = offset_t.expect("Field offset not specified, expected #[offset = <OFFSET>]");
     let address_t =
@@ -51,7 +45,8 @@ pub fn derive_csr_access(item: proc_macro::TokenStream) -> proc_macro::TokenStre
         )
     }
     let data = input.data;
-    let mut match_arms: Vec<TokenStream> = vec![];
+    let mut set_match_arms: Vec<TokenStream> = vec![];
+    let mut write_match_arms: Vec<TokenStream> = vec![];
     // field_data.push(quote!(let a = 1337));
     match data {
         Data::Enum(ref data) => {
@@ -69,8 +64,17 @@ pub fn derive_csr_access(item: proc_macro::TokenStream) -> proc_macro::TokenStre
                     val.to_string(),
                     offset_t.clone().to_string()
                 );
-                match_arms.push(quote!(
+                let write_string = format!(
+                    "csrrwi zero, {}, {}<<{}",
+                    address_t.clone().to_string(),
+                    val.to_string(),
+                    offset_t.clone().to_string()
+                );
+                set_match_arms.push(quote!(
                     #ident => {unsafe{asm!(#set_string)}},
+                ));
+                write_match_arms.push(quote!(
+                    #ident => {unsafe{asm!(#write_string)}},
                 ));
             }
         }
@@ -83,19 +87,25 @@ pub fn derive_csr_access(item: proc_macro::TokenStream) -> proc_macro::TokenStre
     }
 
     let enum_ident = input.ident;
-    let output = if width > 1 && !match_arms.is_empty() {
+    let output = if width > 1 && !set_match_arms.is_empty() {
         quote!(
             impl #enum_ident {
                 #[inline]
                 pub fn set_field(field: #enum_ident) {
                     match field {
-                       #(#enum_ident::#match_arms)*
+                       #(#enum_ident::#set_match_arms)*
+                    }
+                }
+
+                pub unsafe fn write_field(field: #enum_ident) {
+                    match field {
+                        #(#enum_ident::#set_match_arms)*
                     }
                 }
                 read_field_as_usize!(#address_t, #width, #offset);
             }
         )
-    } else if width > 1 && match_arms.is_empty() {
+    } else if width > 1 && set_match_arms.is_empty() {
         quote!(
             //THIS WILL BREAK IF THRESHOLD IS SET MORE THAN ONCE
             impl #enum_ident {

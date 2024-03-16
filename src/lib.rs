@@ -9,9 +9,18 @@ pub mod i2_vec;
 pub mod interrupt0;
 pub mod interrupt1;
 pub mod interrupt2;
+pub mod interrupt3;
 pub mod mintthresh;
 pub mod mstatus;
-
+pub struct Peripherals {}
+impl Peripherals {
+    pub fn steal() -> Peripherals {
+        Peripherals {}
+    }
+}
+pub use interrupt1::Interrupt1;
+pub use interrupt2::Interrupt2;
+pub use interrupt3::Interrupt3;
 pub unsafe trait Interrupt {
     unsafe fn pend_int();
     unsafe fn clear_int();
@@ -86,5 +95,28 @@ unsafe impl Interrupt for interrupt2::Interrupt2 {
     #[inline(always)]
     unsafe fn clear_int() {
         interrupt1::Pending::clear();
+    }
+}
+
+unsafe impl Interrupt for interrupt3::Interrupt3 {
+    #[inline(always)]
+    unsafe fn pend_int() {
+        interrupt3::Pending::set();
+    }
+    #[inline(always)]
+    unsafe fn enable_int() {
+        interrupt3::Enabled::set();
+    }
+    #[inline(always)]
+    unsafe fn disable_int() {
+        interrupt3::Enabled::clear();
+    }
+    #[inline(always)]
+    unsafe fn set_priority(prio: u8) {
+        interrupt3::Priority::set(prio as usize);
+    }
+    #[inline(always)]
+    unsafe fn clear_int() {
+        interrupt3::Pending::clear();
     }
 }
