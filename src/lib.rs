@@ -16,6 +16,7 @@ pub mod timer;
 pub struct Peripherals {
     pub timer: Timer,
     pub gpio: GPIO,
+    pub i0_timestamp: I0Timestamp,
 }
 
 static mut _TAKEN: bool = false;
@@ -36,6 +37,9 @@ impl Peripherals {
                     gpio: GPIO {
                         _marker: PhantomData,
                     },
+                    i0_timestamp: I0Timestamp {
+                        _marker: PhantomData,
+                    },
                 })
             }
         })
@@ -48,13 +52,18 @@ impl Peripherals {
             gpio: GPIO {
                 _marker: PhantomData,
             },
+            i0_timestamp: I0Timestamp {
+                _marker: PhantomData,
+            },
         }
     }
 }
 pub struct GPIO {
     _marker: PhantomData<*const ()>,
 }
-
+pub struct I0Timestamp {
+    _marker: PhantomData<*const ()>,
+}
 pub struct Timer {
     _marker: PhantomData<*const ()>,
 }
