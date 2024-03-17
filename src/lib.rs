@@ -82,10 +82,25 @@ impl Timer {
             timer::Bits::write(val);
         }
     }
+    pub fn counter_top(&self) -> CounterTop {
+        CounterTop {
+            _marker: PhantomData,
+        }
+    }
 }
 impl I0Timestamp {
     pub fn read(&self) -> usize {
         unsafe { i0_timestamp::Bits::read() }
+    }
+}
+pub struct CounterTop {
+    _marker: PhantomData<*const ()>,
+}
+impl CounterTop {
+    pub fn write(&self, val: usize) {
+        unsafe {
+            timer::Bits::write(val << 4);
+        }
     }
 }
 use core::marker::PhantomData;
