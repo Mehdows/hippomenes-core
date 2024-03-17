@@ -3,6 +3,7 @@
 pub mod macros;
 
 pub mod gpio;
+pub mod i0_timestamp;
 pub mod i0_vec;
 pub mod i1_vec;
 pub mod i2_vec;
@@ -79,6 +80,13 @@ impl Timer {
     pub fn write(&self, val: usize) {
         unsafe {
             timer::Bits::write(val);
+        }
+    }
+}
+impl I0Timestamp {
+    pub fn read(&self) {
+        unsafe {
+            i0_timestamp::Bits::read();
         }
     }
 }
