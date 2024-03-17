@@ -12,6 +12,7 @@ pub mod interrupt2;
 pub mod interrupt3;
 pub mod mintthresh;
 pub mod mstatus;
+pub mod timer;
 pub struct Peripherals {}
 impl Peripherals {
     pub fn steal() -> Peripherals {
