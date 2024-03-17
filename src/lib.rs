@@ -13,10 +13,34 @@ pub mod interrupt3;
 pub mod mintthresh;
 pub mod mstatus;
 pub mod timer;
-pub struct Peripherals {}
+pub struct Peripherals {
+    pub timer: timer::Bits,
+    pub gpio: gpio::Bits,
+}
+
+static mut _TAKEN: bool = false;
+
 impl Peripherals {
-    pub fn steal() -> Peripherals {
-        Peripherals {}
+    pub fn take() -> Option<Self> {
+        critical_section::with(|_| {
+            if unsafe { _TAKEN } {
+                None
+            } else {
+                unsafe {
+                    _TAKEN = true;
+                }
+                Some(Peripherals {
+                    timer: timer::Bits,
+                    gpio: gpio::Bits,
+                })
+            }
+        })
+    }
+    pub unsafe fn steal() -> Peripherals {
+        Peripherals {
+            timer: timer::Bits,
+            gpio: gpio::Bits,
+        }
     }
 }
 pub use interrupt0::Interrupt0;
