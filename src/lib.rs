@@ -14,8 +14,8 @@ pub mod mintthresh;
 pub mod mstatus;
 pub mod timer;
 pub struct Peripherals {
-    pub timer: timer::Bits,
-    pub gpio: gpio::Bits,
+    pub timer: Timer,
+    pub gpio: GPIO,
 }
 
 static mut _TAKEN: bool = false;
@@ -30,19 +30,51 @@ impl Peripherals {
                     _TAKEN = true;
                 }
                 Some(Peripherals {
-                    timer: timer::Bits,
-                    gpio: gpio::Bits,
+                    timer: Timer {
+                        _marker: PhantomData,
+                    },
+                    gpio: GPIO {
+                        _marker: PhantomData,
+                    },
                 })
             }
         })
     }
     pub unsafe fn steal() -> Peripherals {
         Peripherals {
-            timer: timer::Bits,
-            gpio: gpio::Bits,
+            timer: Timer {
+                _marker: PhantomData,
+            },
+            gpio: GPIO {
+                _marker: PhantomData,
+            },
         }
     }
 }
+pub struct GPIO {
+    _marker: PhantomData<*const ()>,
+}
+
+pub struct Timer {
+    _marker: PhantomData<*const ()>,
+}
+impl GPIO {
+    pub fn write(&self, val: usize) {
+        unsafe {
+            gpio::Bits::write(val);
+        }
+    }
+}
+
+impl Timer {
+    pub fn write(&self, val: usize) {
+        unsafe {
+            timer::Bits::write(val);
+        }
+    }
+}
+use core::marker::PhantomData;
+
 pub use interrupt0::Interrupt0;
 pub use interrupt1::Interrupt1;
 pub use interrupt2::Interrupt2;

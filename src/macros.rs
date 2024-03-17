@@ -46,7 +46,7 @@ macro_rules! write_csr_as {
 
         /// Writes the CSR and returns the old value
         #[inline]
-        pub fn write(bits: usize) -> usize {
+        pub unsafe fn write(bits: usize) -> usize {
             unsafe { Self::_write(bits) }
         }
     };
