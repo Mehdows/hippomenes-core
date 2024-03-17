@@ -89,7 +89,7 @@ pub fn derive_csr_access(item: proc_macro::TokenStream) -> proc_macro::TokenStre
         quote!(
             impl #enum_ident {
                 #[inline]
-                pub fn set_field(field: #enum_ident) {
+                pub unsafe fn set_field(field: #enum_ident) {
                     match field {
                        #(#enum_ident::#set_match_arms)*
                     }
