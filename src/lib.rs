@@ -84,10 +84,8 @@ impl Timer {
     }
 }
 impl I0Timestamp {
-    pub fn read(&self) {
-        unsafe {
-            i0_timestamp::Bits::read();
-        }
+    pub fn read(&self) -> usize {
+        unsafe { i0_timestamp::Bits::read() }
     }
 }
 use core::marker::PhantomData;
