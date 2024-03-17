@@ -143,7 +143,7 @@ macro_rules! read_csr_as_usize {
 
         /// Reads the CSR
         #[inline]
-        pub fn read() -> usize {
+        pub unsafe fn read() -> usize {
             unsafe { Self::_read() }
         }
     };
