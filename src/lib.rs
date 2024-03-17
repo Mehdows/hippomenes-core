@@ -19,6 +19,7 @@ impl Peripherals {
         Peripherals {}
     }
 }
+pub use interrupt0::Interrupt0;
 pub use interrupt1::Interrupt1;
 pub use interrupt2::Interrupt2;
 pub use interrupt3::Interrupt3;
