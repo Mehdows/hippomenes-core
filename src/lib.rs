@@ -68,14 +68,44 @@ pub struct I0Timestamp {
 pub struct Timer {
     _marker: PhantomData<*const ()>,
 }
+
+pub struct Pins {
+    pub pin0: Pin0,
+    _marker: PhantomData<*const ()>,
+}
+
+pub struct Pin0 {
+    _marker: PhantomData<*const ()>,
+}
+
 impl GPIO {
     pub fn write(&self, val: usize) {
         unsafe {
             gpio::Bits::write(val);
         }
     }
-}
 
+    pub fn pins(self) -> Pins {
+        Pins {
+            pin0: Pin0 {
+                _marker: PhantomData,
+            },
+            _marker: PhantomData,
+        }
+    }
+}
+pub trait Pin: Sized {
+    fn set_high(&self);
+    fn set_low(&self);
+}
+impl Pin for Pin0 {
+    fn set_high(&self) {
+        gpio::Pin0::set()
+    }
+    fn set_low(&self) {
+        gpio::Pin0::clear()
+    }
+}
 impl Timer {
     pub fn write(&self, val: usize) {
         unsafe {
