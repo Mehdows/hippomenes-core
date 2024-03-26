@@ -47,6 +47,7 @@ impl<T: Pin> UART<T> {
             BUFFER = buf;
             BUFFER_PTR = 0;
             BYTE_PTR = 0;
+            // Interrupt2::enable_int();
             Interrupt0::enable_int()
         };
     }
@@ -65,9 +66,9 @@ macro_rules! create_uart_token {
             let pin = unsafe { Peripherals::steal().gpio.pins().$x };
             let timer = unsafe { Peripherals::steal().timer };
             if START {
+                timer.counter_top().write(BAUD);
                 pin.set_low(); //start bit
                 START = false;
-                timer.counter_top().write(BAUD);
                 return;
             }
             if BYTE_PTR == 8 {
@@ -82,6 +83,7 @@ macro_rules! create_uart_token {
                     BUFFER_PTR = 0;
                     BYTE_PTR = 0;
                     Interrupt0::disable_int();
+                    Interrupt2::pend_int();
                     return;
                 }
             } else {
