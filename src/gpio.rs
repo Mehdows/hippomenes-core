@@ -9,6 +9,30 @@ use hippomenes_derive::CSRAccess;
 #[address = 0x0]
 pub enum Pin0 {}
 
+#[derive(CSRAccess)]
+#[width = 1]
+#[offset = 1]
+#[address = 0x0]
+pub enum Pin1 {}
+
+#[derive(CSRAccess)]
+#[width = 1]
+#[offset = 2]
+#[address = 0x0]
+pub enum Pin2 {}
+
+#[derive(CSRAccess)]
+#[width = 1]
+#[offset = 3]
+#[address = 0x0]
+pub enum Pin3 {}
+
+#[derive(CSRAccess)]
+#[width = 1]
+#[offset = 4]
+#[address = 0x0]
+pub enum Pin4 {}
+
 // CSR as a whole
 pub struct Bits;
 

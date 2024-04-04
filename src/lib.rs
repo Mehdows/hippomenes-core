@@ -71,13 +71,28 @@ pub struct Timer {
 
 pub struct Pins {
     pub pin0: Pin0,
+    pub pin1: Pin1,
+    pub pin2: Pin2,
+    pub pin3: Pin3,
+    pub pin4: Pin4,
     _marker: PhantomData<*const ()>,
 }
 
 pub struct Pin0 {
     _marker: PhantomData<*const ()>,
 }
-
+pub struct Pin1 {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Pin2 {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Pin3 {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Pin4 {
+    _marker: PhantomData<*const ()>,
+}
 impl GPIO {
     pub fn write(&self, val: usize) {
         unsafe {
@@ -88,6 +103,18 @@ impl GPIO {
     pub fn pins(self) -> Pins {
         Pins {
             pin0: Pin0 {
+                _marker: PhantomData,
+            },
+            pin1: Pin1 {
+                _marker: PhantomData,
+            },
+            pin2: Pin2 {
+                _marker: PhantomData,
+            },
+            pin3: Pin3 {
+                _marker: PhantomData,
+            },
+            pin4: Pin4 {
                 _marker: PhantomData,
             },
             _marker: PhantomData,
@@ -104,6 +131,38 @@ impl Pin for Pin0 {
     }
     fn set_low(&self) {
         gpio::Pin0::clear()
+    }
+}
+impl Pin for Pin1 {
+    fn set_high(&self) {
+        gpio::Pin1::set()
+    }
+    fn set_low(&self) {
+        gpio::Pin1::clear()
+    }
+}
+impl Pin for Pin2 {
+    fn set_high(&self) {
+        gpio::Pin2::set()
+    }
+    fn set_low(&self) {
+        gpio::Pin2::clear()
+    }
+}
+impl Pin for Pin3 {
+    fn set_high(&self) {
+        gpio::Pin3::set()
+    }
+    fn set_low(&self) {
+        gpio::Pin3::clear()
+    }
+}
+impl Pin for Pin4 {
+    fn set_high(&self) {
+        gpio::Pin4::set()
+    }
+    fn set_low(&self) {
+        gpio::Pin4::clear()
     }
 }
 impl Timer {
