@@ -26,7 +26,7 @@ impl<T: Pin> UART<T> {
         //_handler_token: impl InterruptToken,
     ) -> UART<T> {
         unsafe { BAUD = (CLOCK_FREQ / rate) as usize };
-        create_uart_token!(pin0);
+        create_uart_token!(pin4);
         unsafe {
             Interrupt0::disable_int();
             Interrupt0::set_priority(7);
