@@ -3,35 +3,37 @@ use core::arch::asm;
 use hippomenes_derive::CSRAccess;
 
 // Field definitions
+
+// Output pins
 #[derive(CSRAccess)]
 #[width = 1]
 #[offset = 0]
-#[address = 0x0]
-pub enum Pin0 {}
+#[address = 0x000]
+pub enum Pout0 {}
 
 #[derive(CSRAccess)]
 #[width = 1]
 #[offset = 1]
-#[address = 0x0]
-pub enum Pin1 {}
+#[address = 0x000]
+pub enum Pout1 {}
 
 #[derive(CSRAccess)]
 #[width = 1]
 #[offset = 2]
-#[address = 0x0]
-pub enum Pin2 {}
+#[address = 0x000]
+pub enum Pout2 {}
 
 #[derive(CSRAccess)]
 #[width = 1]
 #[offset = 3]
-#[address = 0x0]
-pub enum Pin3 {}
+#[address = 0x000]
+pub enum Pout3 {}
 
 #[derive(CSRAccess)]
 #[width = 1]
 #[offset = 4]
-#[address = 0x0]
-pub enum Pin4 {}
+#[address = 0x000]
+pub enum Pout4 {}
 
 // CSR as a whole
 pub struct Bits;

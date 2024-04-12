@@ -1,5 +1,4 @@
 #![no_std]
-use core::marker::PhantomData;
 use hippomenes_core::*;
 
 const CLOCK_FREQ: u32 = 20_000_000;
@@ -11,34 +10,24 @@ static mut BUFFER_PTR: usize = 0;
 static mut BYTE_PTR: usize = 0;
 static mut START: bool = true;
 static mut BAUD: usize = 0;
-pub struct UART<T> {
-    pin: T,
-    timer: Timer,
-    rate: u32,
-    _marker: PhantomData<*const ()>,
-}
 
-impl<T: Pin> UART<T> {
+pub struct UART;
+
+impl UART {
     pub fn new(
-        pin: T,
+        _pout: Pout4, // TX (target side) RX (host side)
         timer: Timer,
         rate: u32,
         //_handler_token: impl InterruptToken,
-    ) -> UART<T> {
+    ) -> UART {
         unsafe { BAUD = (CLOCK_FREQ / rate) as usize };
-        create_uart_token!(pin4);
+        create_uart_token!(pout);
         unsafe {
             Interrupt0::disable_int();
             Interrupt0::set_priority(7);
         };
         timer.counter_top().write(unsafe { BAUD });
-        let u = UART {
-            pin,
-            timer,
-            rate,
-            _marker: PhantomData,
-        };
-        u
+        UART {}
     }
 
     pub fn send(&mut self, buf: [u8; BUF_WIDTH]) {
@@ -47,8 +36,7 @@ impl<T: Pin> UART<T> {
             BUFFER = buf;
             BUFFER_PTR = 0;
             BYTE_PTR = 0;
-            // Interrupt2::enable_int();
-            Interrupt0::enable_int()
+            Interrupt0::enable_int() // Timer interrupt
         };
     }
 }
@@ -63,16 +51,18 @@ macro_rules! create_uart_token {
         }
         #[inline(always)]
         unsafe fn on_timer_interrupt() {
-            let pin = unsafe { Peripherals::steal().gpio.pins().$x };
-            let timer = unsafe { Peripherals::steal().timer };
+            let p = unsafe { Peripherals::steal() };
+            let timer = p.timer;
+            let tx = p.gpo.split().pout4;
+
             if START {
                 timer.counter_top().write(BAUD);
-                pin.set_low(); //start bit
+                tx.set_low(); //start bit
                 START = false;
                 return;
             }
             if BYTE_PTR == 8 {
-                pin.set_high(); //stop bit
+                tx.set_high(); //stop bit
                 START = true;
                 if BUFFER_PTR < BUF_WIDTH - 1 {
                     BUFFER_PTR += 1;
@@ -89,19 +79,13 @@ macro_rules! create_uart_token {
             } else {
                 if ((BUFFER[BUFFER_PTR] >> BYTE_PTR) & 0b1) == 1 {
                     BYTE_PTR += 1;
-                    pin.set_high()
+                    tx.set_high()
                 } else {
                     BYTE_PTR += 1;
-                    pin.set_low()
+                    tx.set_low()
                 }
             }
         }
-
-        pub struct UARTHandlerToken;
-
-        unsafe impl InterruptToken<UART<Pin0>> for UARTHandlerToken {}
-
-        UARTHandlerToken
     }};
 }
 

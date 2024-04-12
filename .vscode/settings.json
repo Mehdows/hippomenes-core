@@ -1,0 +1,15 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./hippomenes-hal/Cargo.toml",
+        "./hippomenes-hal/Cargo.toml",
+        "./hippomenes-hal/macros/Cargo.toml"
+    ],
+    "cSpell.ignoreWords": [
+        "UART",
+        "csrrsi",
+        "csrrwi",
+        "gpio",
+        "mintthresh",
+        "mstatus"
+    ]
+}
