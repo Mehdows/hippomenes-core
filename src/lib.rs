@@ -15,10 +15,12 @@ pub mod interrupt3;
 pub mod mintthresh;
 pub mod mstatus;
 pub mod timer;
+pub mod uart;
 pub struct Peripherals {
     pub timer: Timer,
     pub gpi: GPI,
     pub gpo: GPO,
+    pub uart: UART,
     pub i0_timestamp: I0Timestamp,
 }
 
@@ -43,6 +45,9 @@ impl Peripherals {
                     gpo: GPO {
                         _marker: PhantomData,
                     },
+                    uart: UART {
+                        _marker: PhantomData,
+                    },
                     i0_timestamp: I0Timestamp {
                         _marker: PhantomData,
                     },
@@ -61,6 +66,9 @@ impl Peripherals {
             gpo: GPO {
                 _marker: PhantomData,
             },
+            uart: UART {
+                _marker: PhantomData,
+            },
             i0_timestamp: I0Timestamp {
                 _marker: PhantomData,
             },
@@ -74,6 +82,11 @@ pub struct GPI {
 pub struct GPO {
     _marker: PhantomData<*const ()>,
 }
+
+pub struct UART {
+    _marker: PhantomData<*const ()>,
+}
+
 pub struct I0Timestamp {
     _marker: PhantomData<*const ()>,
 }

@@ -6,6 +6,9 @@
     ],
     "cSpell.ignoreWords": [
         "UART",
+        "csrrc",
+        "csrrci",
+        "csrrs",
         "csrrsi",
         "csrrwi",
         "gpio",
