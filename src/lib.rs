@@ -156,7 +156,7 @@ pub struct Pout4 {
 impl GPO {
     pub fn write(&self, val: usize) {
         unsafe {
-            gpi::Bits::write(val);
+            gpo::Bits::write(val);
         }
     }
 
@@ -335,7 +335,7 @@ unsafe impl Interrupt for interrupt0::Interrupt0 {
     }
     #[inline(always)]
     unsafe fn clear_int() {
-        interrupt1::Pending::clear();
+        interrupt0::Pending::clear();
     }
 }
 
@@ -381,7 +381,7 @@ unsafe impl Interrupt for interrupt2::Interrupt2 {
     }
     #[inline(always)]
     unsafe fn clear_int() {
-        interrupt1::Pending::clear();
+        interrupt2::Pending::clear();
     }
 }
 
