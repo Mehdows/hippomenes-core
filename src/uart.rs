@@ -15,8 +15,8 @@ pub enum Uart {}
 pub struct Bits;
 
 impl Bits {
-    read_csr_as_usize!(0x000);
-    write_csr_as!(0x000);
-    set!(0x000);
-    clear!(0x000);
+    read_csr_as_usize!(0x050);
+    write_csr_as!(0x050);
+    set!(0x050);
+    clear!(0x050);
 }

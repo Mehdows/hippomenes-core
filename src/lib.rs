@@ -288,6 +288,14 @@ impl InputPin for Pin3 {
     }
 }
 
+impl UART {
+    pub fn write(&self, val: usize) {
+        unsafe {
+            uart::Bits::write(val);
+        }
+    }
+}
+
 impl Timer {
     pub fn write(&self, val: usize) {
         unsafe {
