@@ -2,7 +2,8 @@
 #[macro_use]
 pub mod macros;
 
-pub mod gpio;
+pub mod gpi;
+pub mod gpo;
 pub mod i0_timestamp;
 pub mod i0_vec;
 pub mod i1_vec;
@@ -14,9 +15,12 @@ pub mod interrupt3;
 pub mod mintthresh;
 pub mod mstatus;
 pub mod timer;
+pub mod uart;
 pub struct Peripherals {
     pub timer: Timer,
-    pub gpio: GPIO,
+    pub gpi: GPI,
+    pub gpo: GPO,
+    pub uart: UART,
     pub i0_timestamp: I0Timestamp,
 }
 
@@ -35,7 +39,13 @@ impl Peripherals {
                     timer: Timer {
                         _marker: PhantomData,
                     },
-                    gpio: GPIO {
+                    gpi: GPI {
+                        _marker: PhantomData,
+                    },
+                    gpo: GPO {
+                        _marker: PhantomData,
+                    },
+                    uart: UART {
                         _marker: PhantomData,
                     },
                     i0_timestamp: I0Timestamp {
@@ -50,7 +60,13 @@ impl Peripherals {
             timer: Timer {
                 _marker: PhantomData,
             },
-            gpio: GPIO {
+            gpi: GPI {
+                _marker: PhantomData,
+            },
+            gpo: GPO {
+                _marker: PhantomData,
+            },
+            uart: UART {
                 _marker: PhantomData,
             },
             i0_timestamp: I0Timestamp {
@@ -59,9 +75,18 @@ impl Peripherals {
         }
     }
 }
-pub struct GPIO {
+pub struct GPI {
     _marker: PhantomData<*const ()>,
 }
+
+pub struct GPO {
+    _marker: PhantomData<*const ()>,
+}
+
+pub struct UART {
+    _marker: PhantomData<*const ()>,
+}
+
 pub struct I0Timestamp {
     _marker: PhantomData<*const ()>,
 }
@@ -69,12 +94,22 @@ pub struct Timer {
     _marker: PhantomData<*const ()>,
 }
 
-pub struct Pins {
-    pub pin0: Pin0,
+pub struct PinOut {
+    pub pout0: Pout0, // Output pins
+    pub pout1: Pout1,
+    pub pout2: Pout2,
+    pub pout3: Pout3,
+    pub pout4: Pout4,
+
+    _marker: PhantomData<*const ()>,
+}
+
+pub struct PinIn {
+    pub pin0: Pin0, // Output pins
     pub pin1: Pin1,
     pub pin2: Pin2,
     pub pin3: Pin3,
-    pub pin4: Pin4,
+
     _marker: PhantomData<*const ()>,
 }
 
@@ -90,18 +125,14 @@ pub struct Pin2 {
 pub struct Pin3 {
     _marker: PhantomData<*const ()>,
 }
-pub struct Pin4 {
-    _marker: PhantomData<*const ()>,
-}
-impl GPIO {
-    pub fn write(&self, val: usize) {
-        unsafe {
-            gpio::Bits::write(val);
-        }
+
+impl GPI {
+    pub fn read(&self) -> usize {
+        unsafe { gpi::Bits::read() }
     }
 
-    pub fn pins(self) -> Pins {
-        Pins {
+    pub fn split(self) -> PinIn {
+        PinIn {
             pin0: Pin0 {
                 _marker: PhantomData,
             },
@@ -114,57 +145,157 @@ impl GPIO {
             pin3: Pin3 {
                 _marker: PhantomData,
             },
-            pin4: Pin4 {
-                _marker: PhantomData,
-            },
             _marker: PhantomData,
         }
     }
 }
-pub trait Pin: Sized {
+
+pub struct Pout0 {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Pout1 {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Pout2 {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Pout3 {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Pout4 {
+    _marker: PhantomData<*const ()>,
+}
+
+impl GPO {
+    pub fn write(&self, val: usize) {
+        unsafe {
+            gpo::Bits::write(val);
+        }
+    }
+
+    pub fn split(self) -> PinOut {
+        PinOut {
+            pout0: Pout0 {
+                _marker: PhantomData,
+            },
+            pout1: Pout1 {
+                _marker: PhantomData,
+            },
+            pout2: Pout2 {
+                _marker: PhantomData,
+            },
+
+            pout3: Pout3 {
+                _marker: PhantomData,
+            },
+
+            pout4: Pout4 {
+                _marker: PhantomData,
+            },
+
+            _marker: PhantomData,
+        }
+    }
+}
+pub trait OutputPin: Sized {
     fn set_high(&self);
     fn set_low(&self);
 }
-impl Pin for Pin0 {
+
+impl OutputPin for Pout0 {
     fn set_high(&self) {
-        gpio::Pin0::set()
+        gpo::Pout0::set()
     }
     fn set_low(&self) {
-        gpio::Pin0::clear()
+        gpo::Pout0::clear()
     }
 }
-impl Pin for Pin1 {
+
+impl OutputPin for Pout1 {
     fn set_high(&self) {
-        gpio::Pin1::set()
+        gpo::Pout1::set()
     }
     fn set_low(&self) {
-        gpio::Pin1::clear()
+        gpo::Pout1::clear()
     }
 }
-impl Pin for Pin2 {
+
+impl OutputPin for Pout2 {
     fn set_high(&self) {
-        gpio::Pin2::set()
+        gpo::Pout2::set()
     }
     fn set_low(&self) {
-        gpio::Pin2::clear()
+        gpo::Pout2::clear()
     }
 }
-impl Pin for Pin3 {
+
+impl OutputPin for Pout3 {
     fn set_high(&self) {
-        gpio::Pin3::set()
+        gpo::Pout3::set()
     }
     fn set_low(&self) {
-        gpio::Pin3::clear()
+        gpo::Pout3::clear()
     }
 }
-impl Pin for Pin4 {
+
+impl OutputPin for Pout4 {
     fn set_high(&self) {
-        gpio::Pin4::set()
+        gpo::Pout4::set()
     }
     fn set_low(&self) {
-        gpio::Pin4::clear()
+        gpo::Pout4::clear()
     }
 }
+
+pub trait InputPin: Sized {
+    fn is_low(&self) -> bool;
+    fn is_high(&self) -> bool;
+}
+
+impl InputPin for Pin0 {
+    fn is_low(&self) -> bool {
+        gpi::Pin0::read() == 0
+    }
+    fn is_high(&self) -> bool {
+        gpi::Pin0::read() == 1
+    }
+}
+
+impl InputPin for Pin1 {
+    fn is_low(&self) -> bool {
+        gpi::Pin1::read() == 0
+    }
+    fn is_high(&self) -> bool {
+        gpi::Pin1::read() == 1
+    }
+}
+
+impl InputPin for Pin2 {
+    fn is_low(&self) -> bool {
+        gpi::Pin2::read() == 0
+    }
+    fn is_high(&self) -> bool {
+        gpi::Pin2::read() == 1
+    }
+}
+
+impl InputPin for Pin3 {
+    fn is_low(&self) -> bool {
+        gpi::Pin3::read() == 0
+    }
+    fn is_high(&self) -> bool {
+        gpi::Pin3::read() == 1
+    }
+}
+
+impl UART {
+    pub fn write(&self, val: usize) {
+        unsafe {
+            uart::Bits::write(val);
+        }
+    }
+}
+
 impl Timer {
     pub fn write(&self, val: usize) {
         unsafe {
@@ -225,7 +356,7 @@ unsafe impl Interrupt for interrupt0::Interrupt0 {
     }
     #[inline(always)]
     unsafe fn clear_int() {
-        interrupt1::Pending::clear();
+        interrupt0::Pending::clear();
     }
 }
 
@@ -271,7 +402,7 @@ unsafe impl Interrupt for interrupt2::Interrupt2 {
     }
     #[inline(always)]
     unsafe fn clear_int() {
-        interrupt1::Pending::clear();
+        interrupt2::Pending::clear();
     }
 }
 

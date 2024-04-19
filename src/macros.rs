@@ -151,7 +151,7 @@ macro_rules! read_csr_as_usize {
 
 macro_rules! field_mask {
     ($width: expr, $offset:expr) => {
-        const _MASK: u8 = ((2u8.pow($width as u32)) - 1) << $offset;
+        const _MASK: usize = ((2usize.pow($width as u32)) - 1) << $offset;
     };
 }
 
@@ -168,6 +168,34 @@ macro_rules! read_field_as_usize {
     };
 }
 
+macro_rules! write_field {
+    ($csr_number: literal, $width: expr, $offset:expr) => {
+        #[inline]
+        #[allow(unused_variables)]
+        unsafe fn _write(bits: usize) -> usize {
+            match () {
+                #[cfg(riscv)]
+                () => {
+                    field_mask!($width, $offset);
+                    let mask = _MASK;
+                    let bits = (bits & _MASK) << $offset;
+                    let old : usize;
+                    core::arch::asm!(concat!("csrrc {1}, ", stringify!($csr_number), ", {0}"), in(reg) mask, out(reg) old);
+                    core::arch::asm!(concat!("csrrs x0, ", stringify!($csr_number), ", {0}"), in(reg) bits);
+                    old
+                }
+
+                #[cfg(not(riscv))]
+                () => unimplemented!(),
+            }
+        }
+        #[inline]
+        pub fn write(val: usize) {
+            unsafe { Self::_write(val)};
+        }
+    };
+}
+
 macro_rules! set_field {
     ($csr_number: literal, 1u8, $offset:expr) => {
         set_imm_1!($csr_number, $offset);
@@ -177,6 +205,7 @@ macro_rules! set_field {
             unsafe { Self::_set_imm() }
         }
     };
+
     ($csr_number: literal, $width: expr, $offset:expr) => {
         set!($csr_number);
         #[inline]
@@ -193,6 +222,14 @@ macro_rules! clear_field {
         #[inline]
         pub fn clear() {
             unsafe { Self::_clear_imm() }
+        }
+    };
+
+    ($csr_number: literal, $width: expr, $offset:expr) => {
+        clear!($csr_number);
+        #[inline]
+        pub fn clear(val: usize) {
+            unsafe { Self::_clear((val & (2usize.pow($width as u32) - 1)) << $offset) };
         }
     };
 }
