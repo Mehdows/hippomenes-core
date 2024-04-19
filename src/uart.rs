@@ -11,12 +11,25 @@ use hippomenes_derive::CSRAccess;
 #[address = 0x050]
 pub enum Uart {}
 
-// CSR as a whole
-pub struct Bits;
+pub mod write_word {
+    pub struct Bits;
 
-impl Bits {
-    read_csr_as_usize!(0x050);
-    write_csr_as!(0x050);
-    set!(0x050);
-    clear!(0x050);
+    impl Bits {
+        read_csr_as_usize!(0x050);
+        write_csr_as!(0x050);
+        set!(0x050);
+        clear!(0x050);
+    }
 }
+
+pub mod write_byte {
+    pub struct Bits;
+
+    impl Bits {
+        read_csr_as_usize!(0x051);
+        write_csr_as!(0x051);
+        set!(0x051);
+        clear!(0x051);
+    }
+}
+// CSR as a whole

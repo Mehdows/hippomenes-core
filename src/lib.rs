@@ -289,9 +289,15 @@ impl InputPin for Pin3 {
 }
 
 impl UART {
-    pub fn write(&self, val: usize) {
+    pub fn write_word(&self, val: usize) {
         unsafe {
-            uart::Bits::write(val);
+            uart::write_word::Bits::write(val);
+        }
+    }
+
+    pub fn write_byte(&self, val: u8) {
+        unsafe {
+            uart::write_byte::Bits::write(val as usize);
         }
     }
 }
