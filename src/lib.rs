@@ -301,6 +301,16 @@ impl UART {
         }
     }
 }
+use core::fmt::Write;
+
+impl Write for UART {
+    fn write_str(&mut self, s: &str) -> core::fmt::Result {
+        for b in s.bytes() {
+            self.write_byte(b)
+        }
+        Ok(())
+    }
+}
 
 impl Timer {
     pub fn write(&self, val: usize) {
