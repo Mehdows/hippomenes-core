@@ -1,31 +1,15 @@
 #![no_std]
-#[macro_use]
-pub mod macros;
-
-pub mod gpi;
-pub mod gpo;
-pub mod i0_timestamp;
-pub mod i0_vec;
-pub mod i1_vec;
-pub mod i2_vec;
-pub mod interrupt0;
-pub mod interrupt1;
-pub mod interrupt2;
-pub mod interrupt3;
-pub mod mintthresh;
-pub mod mstatus;
-pub mod timer;
-pub mod uart;
+use core::marker::PhantomData;
+use csr_trait::CSR;
 pub struct Peripherals {
     pub timer: Timer,
     pub gpi: GPI,
     pub gpo: GPO,
     pub uart: UART,
     pub i0_timestamp: I0Timestamp,
+    pub interrupt_controller: InterruptController
 }
-
 static mut _TAKEN: bool = false;
-
 impl Peripherals {
     pub fn take() -> Option<Self> {
         critical_section::with(|_| {
@@ -46,11 +30,20 @@ impl Peripherals {
                         _marker: PhantomData,
                     },
                     uart: UART {
-                        _marker: PhantomData,
+                        word_write: UARTWriteWordReg { _marker: PhantomData,},
+                        byte_write: UARTWriteByteReg { _marker: PhantomData,},
                     },
                     i0_timestamp: I0Timestamp {
                         _marker: PhantomData,
                     },
+                    interrupt_controller: InterruptController {
+                        mstatus: MStatus {_marker: PhantomData,},
+                        mintthresh: MIntThresh {_marker: PhantomData,},
+                        interrupt0: Interrupt0 {_marker: PhantomData,},
+                        interrupt1: Interrupt1 {_marker: PhantomData,},
+                        interrupt2: Interrupt2 {_marker: PhantomData,},
+                        interrupt3: Interrupt3 {_marker: PhantomData,},
+                    }
                 })
             }
         })
@@ -67,380 +60,244 @@ impl Peripherals {
                 _marker: PhantomData,
             },
             uart: UART {
-                _marker: PhantomData,
+                word_write: UARTWriteWordReg { _marker: PhantomData,},
+                byte_write: UARTWriteByteReg { _marker: PhantomData,},
             },
             i0_timestamp: I0Timestamp {
                 _marker: PhantomData,
             },
+            interrupt_controller: InterruptController {
+                mstatus: MStatus {_marker: PhantomData,},
+                mintthresh: MIntThresh {_marker: PhantomData,},
+                interrupt0: Interrupt0 {_marker: PhantomData,},
+                interrupt1: Interrupt1 {_marker: PhantomData,},
+                interrupt2: Interrupt2 {_marker: PhantomData,},
+                interrupt3: Interrupt3 {_marker: PhantomData,},
+
+            }
         }
     }
 }
-pub struct GPI {
-    _marker: PhantomData<*const ()>,
-}
-
-pub struct GPO {
-    _marker: PhantomData<*const ()>,
-}
-
-pub struct UART {
-    _marker: PhantomData<*const ()>,
-}
-
 pub struct I0Timestamp {
+    _marker:PhantomData<*const ()>,
+}
+pub struct GPI {
+    _marker:PhantomData<*const ()>,
+}
+pub struct GPO {
+    _marker:PhantomData<*const ()>,
+}
+pub struct UART {
+    pub word_write: UARTWriteWordReg,
+    pub byte_write: UARTWriteByteReg,
+}
+pub struct UARTWriteWordReg {
+    _marker: PhantomData<*const ()>,
+}
+pub struct UARTWriteByteReg {
     _marker: PhantomData<*const ()>,
 }
 pub struct Timer {
+    _marker:PhantomData<*const ()>,
+}
+pub struct MStatus {
+    _marker:PhantomData<*const ()>,
+}
+pub struct MIntThresh {
+    _marker:PhantomData<*const ()>,
+}
+pub struct Interrupt0 {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Interrupt1 {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Interrupt2 {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Interrupt3 {
     _marker: PhantomData<*const ()>,
 }
 
-pub struct PinOut {
-    pub pout0: Pout0, // Output pins
-    pub pout1: Pout1,
-    pub pout2: Pout2,
-    pub pout3: Pout3,
-    pub pout4: Pout4,
-
-    _marker: PhantomData<*const ()>,
+pub struct InterruptController {
+    pub mstatus: MStatus,
+    pub mintthresh: MIntThresh,
+    pub interrupt0: Interrupt0,
+    pub interrupt1: Interrupt1,
+    pub interrupt2: Interrupt2,
+    pub interrupt3: Interrupt3,
 }
 
-pub struct PinIn {
-    pub pin0: Pin0, // Output pins
-    pub pin1: Pin1,
-    pub pin2: Pin2,
-    pub pin3: Pin3,
-
-    _marker: PhantomData<*const ()>,
+impl CSR for I0Timestamp {
+    const ADDR: u16 = 0xB40;
 }
 
-pub struct Pin0 {
-    _marker: PhantomData<*const ()>,
-}
-pub struct Pin1 {
-    _marker: PhantomData<*const ()>,
-}
-pub struct Pin2 {
-    _marker: PhantomData<*const ()>,
-}
-pub struct Pin3 {
-    _marker: PhantomData<*const ()>,
+impl CSR for GPI {
+    const ADDR: u16 = 0x001;
 }
 
-impl GPI {
-    pub fn read(&self) -> usize {
-        unsafe { gpi::Bits::read() }
-    }
-
-    pub fn split(self) -> PinIn {
-        PinIn {
-            pin0: Pin0 {
-                _marker: PhantomData,
-            },
-            pin1: Pin1 {
-                _marker: PhantomData,
-            },
-            pin2: Pin2 {
-                _marker: PhantomData,
-            },
-            pin3: Pin3 {
-                _marker: PhantomData,
-            },
-            _marker: PhantomData,
-        }
-    }
+impl CSR for GPO {
+    const ADDR: u16 = 0x000;
+}
+impl CSR for Timer {
+    const ADDR: u16 = 0x400;
+}
+impl CSR for UARTWriteWordReg {
+    const ADDR: u16 = 0x050;
+}
+impl CSR for UARTWriteByteReg {
+    const ADDR: u16 = 0x051;
+}
+impl CSR for MStatus {
+    const ADDR: u16 = 0x300;
+}
+impl CSR for MIntThresh {
+    const ADDR: u16 = 0x347;
+}
+impl CSR for Interrupt0 {
+    const ADDR: u16 = 0xB20;
+}
+impl CSR for Interrupt1 {
+    const ADDR: u16 = 0xB21;
+}
+impl CSR for Interrupt2 {
+    const ADDR: u16 = 0xB22;
+}
+impl CSR for Interrupt3 {
+    const ADDR: u16 = 0xB23;
 }
 
-pub struct Pout0 {
-    _marker: PhantomData<*const ()>,
-}
-pub struct Pout1 {
-    _marker: PhantomData<*const ()>,
-}
-pub struct Pout2 {
-    _marker: PhantomData<*const ()>,
-}
-pub struct Pout3 {
-    _marker: PhantomData<*const ()>,
-}
-pub struct Pout4 {
-    _marker: PhantomData<*const ()>,
-}
-
-impl GPO {
-    pub fn write(&self, val: usize) {
-        unsafe {
-            gpo::Bits::write(val);
-        }
-    }
-
-    pub fn split(self) -> PinOut {
-        PinOut {
-            pout0: Pout0 {
-                _marker: PhantomData,
-            },
-            pout1: Pout1 {
-                _marker: PhantomData,
-            },
-            pout2: Pout2 {
-                _marker: PhantomData,
-            },
-
-            pout3: Pout3 {
-                _marker: PhantomData,
-            },
-
-            pout4: Pout4 {
-                _marker: PhantomData,
-            },
-
-            _marker: PhantomData,
-        }
-    }
-}
-pub trait OutputPin: Sized {
-    fn set_high(&self);
-    fn set_low(&self);
-}
-
-impl OutputPin for Pout0 {
-    fn set_high(&self) {
-        gpo::Pout0::set()
-    }
-    fn set_low(&self) {
-        gpo::Pout0::clear()
-    }
-}
-
-impl OutputPin for Pout1 {
-    fn set_high(&self) {
-        gpo::Pout1::set()
-    }
-    fn set_low(&self) {
-        gpo::Pout1::clear()
-    }
-}
-
-impl OutputPin for Pout2 {
-    fn set_high(&self) {
-        gpo::Pout2::set()
-    }
-    fn set_low(&self) {
-        gpo::Pout2::clear()
-    }
-}
-
-impl OutputPin for Pout3 {
-    fn set_high(&self) {
-        gpo::Pout3::set()
-    }
-    fn set_low(&self) {
-        gpo::Pout3::clear()
-    }
-}
-
-impl OutputPin for Pout4 {
-    fn set_high(&self) {
-        gpo::Pout4::set()
-    }
-    fn set_low(&self) {
-        gpo::Pout4::clear()
-    }
-}
-
-pub trait InputPin: Sized {
-    fn is_low(&self) -> bool;
-    fn is_high(&self) -> bool;
-}
-
-impl InputPin for Pin0 {
-    fn is_low(&self) -> bool {
-        gpi::Pin0::read() == 0
-    }
-    fn is_high(&self) -> bool {
-        gpi::Pin0::read() == 1
-    }
-}
-
-impl InputPin for Pin1 {
-    fn is_low(&self) -> bool {
-        gpi::Pin1::read() == 0
-    }
-    fn is_high(&self) -> bool {
-        gpi::Pin1::read() == 1
-    }
-}
-
-impl InputPin for Pin2 {
-    fn is_low(&self) -> bool {
-        gpi::Pin2::read() == 0
-    }
-    fn is_high(&self) -> bool {
-        gpi::Pin2::read() == 1
-    }
-}
-
-impl InputPin for Pin3 {
-    fn is_low(&self) -> bool {
-        gpi::Pin3::read() == 0
-    }
-    fn is_high(&self) -> bool {
-        gpi::Pin3::read() == 1
-    }
-}
-
-impl UART {
-    pub fn write_word(&self, val: usize) {
-        unsafe {
-            uart::write_word::Bits::write(val);
-        }
-    }
-
-    pub fn write_byte(&self, val: u8) {
-        unsafe {
-            uart::write_byte::Bits::write(val as usize);
-        }
-    }
-}
-use core::fmt::Write;
-
-impl Write for UART {
-    fn write_str(&mut self, s: &str) -> core::fmt::Result {
-        for b in s.bytes() {
-            self.write_byte(b)
-        }
-        Ok(())
-    }
-}
-
-impl Timer {
-    pub fn write(&self, val: usize) {
-        unsafe {
-            timer::Bits::write(val);
-        }
-    }
-    pub fn counter_top(&self) -> CounterTop {
-        CounterTop {
-            _marker: PhantomData,
-        }
-    }
-}
-impl I0Timestamp {
-    pub fn read(&self) -> usize {
-        unsafe { i0_timestamp::Bits::read() }
-    }
-}
-pub struct CounterTop {
-    _marker: PhantomData<*const ()>,
-}
-impl CounterTop {
-    pub fn write(&self, val: usize) {
-        unsafe {
-            timer::Bits::write(val << 4);
-        }
-    }
-}
-use core::marker::PhantomData;
-
-pub use interrupt0::Interrupt0;
-pub use interrupt1::Interrupt1;
-pub use interrupt2::Interrupt2;
-pub use interrupt3::Interrupt3;
 pub unsafe trait Interrupt {
-    unsafe fn pend_int();
-    unsafe fn clear_int();
-    unsafe fn enable_int();
-    unsafe fn disable_int();
-    unsafe fn set_priority(prio: u8);
+    unsafe fn pend_int(&mut self);
+    unsafe fn clear_int(&mut self);
+    unsafe fn enable_int(&mut self);
+    unsafe fn disable_int(&mut self);
+    unsafe fn write_priority(&mut self, prio: u8);
 }
 
-unsafe impl Interrupt for interrupt0::Interrupt0 {
+unsafe impl Interrupt for Interrupt0 {
     #[inline(always)]
-    unsafe fn pend_int() {
-        interrupt0::Pending::set();
+    unsafe fn pend_int(&mut self) {
+        self.set(1);
     }
     #[inline(always)]
-    unsafe fn enable_int() {
-        interrupt0::Enabled::set();
+    unsafe fn enable_int(&mut self) {
+        self.set(1<<1);
     }
     #[inline(always)]
-    unsafe fn disable_int() {
-        interrupt0::Enabled::clear();
+    unsafe fn disable_int(&mut self) {
+        self.clear(1<<1);
     }
     #[inline(always)]
-    unsafe fn set_priority(prio: u8) {
-        interrupt0::Priority::set(prio as usize);
+    unsafe fn write_priority(&mut self, prio: u8) {
+        self.write((prio<<2) as u32);
     }
     #[inline(always)]
-    unsafe fn clear_int() {
-        interrupt0::Pending::clear();
+    unsafe fn clear_int(&mut self) {
+        self.clear(1);
+    }
+}
+unsafe impl Interrupt for Interrupt1 {
+    #[inline(always)]
+    unsafe fn pend_int(&mut self) {
+        self.set(1);
+    }
+    #[inline(always)]
+    unsafe fn enable_int(&mut self) {
+        self.set(1<<1);
+    }
+    #[inline(always)]
+    unsafe fn disable_int(&mut self) {
+        self.clear(1<<1);
+    }
+    #[inline(always)]
+    unsafe fn write_priority(&mut self, prio: u8) {
+        self.write((prio<<2) as u32);
+    }
+    #[inline(always)]
+    unsafe fn clear_int(&mut self) {
+        self.clear(1);
+    }
+}
+unsafe impl Interrupt for Interrupt2 {
+    #[inline(always)]
+    unsafe fn pend_int(&mut self) {
+        self.set(1);
+    }
+    #[inline(always)]
+    unsafe fn enable_int(&mut self) {
+        self.set(1<<1);
+    }
+    #[inline(always)]
+    unsafe fn disable_int(&mut self) {
+        self.clear(1<<1);
+    }
+    #[inline(always)]
+    unsafe fn write_priority(&mut self, prio: u8) {
+        self.write((prio<<2) as u32);
+    }
+    #[inline(always)]
+    unsafe fn clear_int(&mut self) {
+        self.clear(1);
+    }
+}
+unsafe impl Interrupt for Interrupt3 {
+    #[inline(always)]
+    unsafe fn pend_int(&mut self) {
+        self.set(1);
+    }
+    #[inline(always)]
+    unsafe fn enable_int(&mut self) {
+        self.set(1<<1);
+    }
+    #[inline(always)]
+    unsafe fn disable_int(&mut self) {
+        self.clear(1<<1);
+    }
+    #[inline(always)]
+    unsafe fn write_priority(&mut self, prio: u8) {
+        self.write((prio<<2) as u32);
+    }
+    #[inline(always)]
+    unsafe fn clear_int(&mut self) {
+        self.clear(1);
+    }
+}
+impl MStatus {
+    #[inline(always)]
+    pub unsafe fn global_interrupt_enable(&mut self) {
+        self.set(8);
+    }
+
+    #[inline(always)]
+    pub unsafe fn global_interrupt_disable(&mut self) {
+        self.clear(8);
     }
 }
 
-unsafe impl Interrupt for interrupt1::Interrupt1 {
-    #[inline(always)]
-    unsafe fn pend_int() {
-        interrupt1::Pending::set();
-    }
-    #[inline(always)]
-    unsafe fn enable_int() {
-        interrupt1::Enabled::set();
-    }
-    #[inline(always)]
-    unsafe fn disable_int() {
-        interrupt1::Enabled::clear();
-    }
-    #[inline(always)]
-    unsafe fn set_priority(prio: u8) {
-        interrupt1::Priority::set(prio as usize);
-    }
-    #[inline(always)]
-    unsafe fn clear_int() {
-        interrupt1::Pending::clear();
-    }
+pub enum Interrupts {
+    Interrupt0,
+    Interrupt1,
+    Interrupt2,
+    Interrupt3
 }
 
-unsafe impl Interrupt for interrupt2::Interrupt2 {
-    #[inline(always)]
-    unsafe fn pend_int() {
-        interrupt2::Pending::set();
+impl Interrupts {
+    pub unsafe fn pend(self, ictl:&mut InterruptController){
+        match self {
+            Interrupts::Interrupt0 => {ictl.interrupt0.pend_int()},
+            Interrupts::Interrupt1 => {ictl.interrupt1.pend_int()},
+            Interrupts::Interrupt2 => {ictl.interrupt2.pend_int()},
+            Interrupts::Interrupt3 => {ictl.interrupt3.pend_int()},
+        }
     }
-    #[inline(always)]
-    unsafe fn enable_int() {
-        interrupt2::Enabled::set();
-    }
-    #[inline(always)]
-    unsafe fn disable_int() {
-        interrupt2::Enabled::clear();
-    }
-    #[inline(always)]
-    unsafe fn set_priority(prio: u8) {
-        interrupt2::Priority::set(prio as usize);
-    }
-    #[inline(always)]
-    unsafe fn clear_int() {
-        interrupt2::Pending::clear();
-    }
-}
+    pub unsafe fn unpend(self, ictl: &mut InterruptController){
+        match self {
+            Interrupts::Interrupt0 => {ictl.interrupt0.clear_int()},
+            Interrupts::Interrupt1 => {ictl.interrupt1.clear_int()},
+            Interrupts::Interrupt2 => {ictl.interrupt2.clear_int()},
+            Interrupts::Interrupt3 => {ictl.interrupt3.clear_int()},
+        }
 
-unsafe impl Interrupt for interrupt3::Interrupt3 {
-    #[inline(always)]
-    unsafe fn pend_int() {
-        interrupt3::Pending::set();
-    }
-    #[inline(always)]
-    unsafe fn enable_int() {
-        interrupt3::Enabled::set();
-    }
-    #[inline(always)]
-    unsafe fn disable_int() {
-        interrupt3::Enabled::clear();
-    }
-    #[inline(always)]
-    unsafe fn set_priority(prio: u8) {
-        interrupt3::Priority::set(prio as usize);
-    }
-    #[inline(always)]
-    unsafe fn clear_int() {
-        interrupt3::Pending::clear();
     }
 }

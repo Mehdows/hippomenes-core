@@ -29,11 +29,28 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7059fff8937831a9ae6f0fe4d658ffabf58f2ca96aa9dec1c889f936f705f216"
 
 [[package]]
+name = "csr"
+version = "0.1.0"
+source = "git+https://github.com/perlindgren/csr#68b5c1924fa119dd1306e0451e185d5f6d2e9ac2"
+dependencies = [
+ "const_format",
+]
+
+[[package]]
+name = "csr_trait"
+version = "0.1.0"
+source = "git+https://github.com/perlindgren/csr#68b5c1924fa119dd1306e0451e185d5f6d2e9ac2"
+dependencies = [
+ "csr",
+]
+
+[[package]]
 name = "hippomenes-core"
 version = "0.1.0"
 dependencies = [
  "const_format",
  "critical-section",
+ "csr_trait",
  "hippomenes-derive",
 ]
 
