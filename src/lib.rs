@@ -86,7 +86,7 @@ pub struct GPO {
 pub struct UART {
     _marker: PhantomData<*const ()>,
 }
-
+unsafe impl Send for UART {}
 pub struct I0Timestamp {
     _marker: PhantomData<*const ()>,
 }
