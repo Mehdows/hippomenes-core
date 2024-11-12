@@ -1,18 +1,20 @@
 #![no_std]
 use core::arch::global_asm;
-use hippomenes_core::{i0_vec, i1_vec, i2_vec};
+use hippomenes_core::{i0_vec, i1_vec, i2_vec, i8_vec};
 pub use hippomenes_rt_macros::entry;
 #[no_mangle]
 pub unsafe fn _setup_interrupts() {
     i0_vec::Bits::write((Interrupt0 as *const fn() as usize) >> 2);
     i1_vec::Bits::write((Interrupt1 as *const fn() as usize) >> 2);
     i2_vec::Bits::write((Interrupt2 as *const fn() as usize) >> 2);
+    i8_vec::Bits::write((_memex as *const fn() as usize) >> 2);
 }
 
 extern "C" {
     fn Interrupt0();
     fn Interrupt1();
     fn Interrupt2();
+    fn _memex();
 }
 
 #[allow(non_snake_case)]
@@ -42,7 +44,7 @@ _abs_start:
     // Copy .data from flash to RAM
     la t0, _sdata       //start data
     la t2, _edata       //end data
-    la t1, _sidata      //source data 
+    la t1, _sidata      //source data
     bgeu t0, t2, 2f
 1:  lw t3, 0(t1)
     addi t1, t1, 4

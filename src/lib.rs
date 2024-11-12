@@ -8,11 +8,13 @@ pub mod i0_timestamp;
 pub mod i0_vec;
 pub mod i1_vec;
 pub mod i2_vec;
+pub mod i8_vec;
 pub mod interrupt0;
 pub mod interrupt1;
 pub mod interrupt2;
 pub mod interrupt3;
 pub mod mintthresh;
+pub mod mpu;
 pub mod mstatus;
 pub mod timer;
 pub mod uart;
@@ -75,6 +77,7 @@ impl Peripherals {
         }
     }
 }
+
 pub struct GPI {
     _marker: PhantomData<*const ()>,
 }
@@ -92,6 +95,20 @@ pub struct I0Timestamp {
 }
 pub struct Timer {
     _marker: PhantomData<*const ()>,
+}
+
+pub struct MPU {
+    pub interrupt_1_config: Interrupt1Config,
+
+    _marker: PhantomData<*const ()>,
+}
+
+pub struct Interrupt1Config {
+    _marker: PhantomData<*const ()>,
+}
+
+impl Interrupt1Config {
+    //pub fn set_permissions(&mut self, )
 }
 
 pub struct PinOut {
@@ -340,6 +357,7 @@ impl CounterTop {
     }
 }
 use core::marker::PhantomData;
+use core::ops::Deref;
 
 pub use interrupt0::Interrupt0;
 pub use interrupt1::Interrupt1;
