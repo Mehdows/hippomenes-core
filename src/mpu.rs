@@ -24,7 +24,7 @@ pub mod Interrupt1Config {
     #[offset = 16]
     #[address = 0x404]
     pub enum Region0Address {}
-
+// ---------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
@@ -46,4 +46,48 @@ pub mod Interrupt1Config {
     #[offset = 16]
     #[address = 0x405]
     pub enum Region1Address {}
+// ------------------------------------
+    #[derive(CSRAccess)]
+    #[width = 2]
+    #[offset = 0]
+    #[address = 0x406]
+    pub enum Region2Permissions {
+        Read = 1,
+        Write = 2,
+        ReadWrite = 3,
+    }
+
+    #[derive(CSRAccess)]
+    #[width = 14]
+    #[offset = 2]
+    #[address = 0x406]
+    pub enum Region2Width {}
+
+    #[derive(CSRAccess)]
+    #[width = 16]
+    #[offset = 16]
+    #[address = 0x406]
+    pub enum Region2Address {}
+// --------------------------
+    #[derive(CSRAccess)]
+    #[width = 16]
+    #[offset = 16]
+    #[address = 0x407]
+    pub enum Region3Address {}
+
+    #[derive(CSRAccess)]
+    #[width = 2]
+    #[offset = 0]
+    #[address = 0x407]
+    pub enum Region3Permissions {
+        Read = 1,
+        Write = 2,
+        ReadWrite = 3,
+    }
+
+    #[derive(CSRAccess)]
+    #[width = 14]
+    #[offset = 2]
+    #[address = 0x407]
+    pub enum Region3Width {}
 }
