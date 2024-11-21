@@ -8,13 +8,21 @@ pub mod i0_timestamp;
 pub mod i0_vec;
 pub mod i1_vec;
 pub mod i2_vec;
+pub mod i3_vec;
+pub mod i4_vec;
+pub mod i5_vec;
+pub mod i6_vec;
+pub mod i7_vec;
 pub mod i8_vec;
 pub mod interrupt0;
 pub mod interrupt1;
 pub mod interrupt2;
 pub mod interrupt3;
+pub mod interrupt4;
+pub mod interrupt5;
+pub mod interrupt6;
+pub mod interrupt7;
 pub mod mintthresh;
-pub mod mpu;
 pub mod mstatus;
 pub mod timer;
 pub mod uart;
@@ -97,10 +105,12 @@ pub struct Timer {
     _marker: PhantomData<*const ()>,
 }
 
-pub struct MPU {
-    pub interrupt_1_config: Interrupt1Config,
-
+pub struct MPUConfig {
     _marker: PhantomData<*const ()>,
+}
+
+impl MPUConfig {
+    //pub fn set_permissions(&mut self, )
 }
 
 pub struct Interrupt1Config {
@@ -359,10 +369,16 @@ impl CounterTop {
 use core::marker::PhantomData;
 use core::ops::Deref;
 
+
 pub use interrupt0::Interrupt0;
 pub use interrupt1::Interrupt1;
 pub use interrupt2::Interrupt2;
 pub use interrupt3::Interrupt3;
+pub use interrupt4::Interrupt4;
+pub use interrupt5::Interrupt5;
+pub use interrupt6::Interrupt6;
+pub use interrupt7::Interrupt7;
+
 pub unsafe trait Interrupt {
     unsafe fn pend_int();
     unsafe fn clear_int();
@@ -462,3 +478,97 @@ unsafe impl Interrupt for interrupt3::Interrupt3 {
         interrupt3::Pending::clear();
     }
 }
+
+
+unsafe impl Interrupt for interrupt4::Interrupt4 {
+    #[inline(always)]
+    unsafe fn pend_int() {
+        interrupt4::Pending::set();
+    }
+    #[inline(always)]
+    unsafe fn enable_int() {
+        interrupt4::Enabled::set();
+    }
+    #[inline(always)]
+    unsafe fn disable_int() {
+        interrupt4::Enabled::clear();
+    }
+    #[inline(always)]
+    unsafe fn set_priority(prio: u8) {
+        interrupt4::Priority::set(prio as usize);
+    }
+    #[inline(always)]
+    unsafe fn clear_int() {
+        interrupt4::Pending::clear();
+    }
+}
+
+unsafe impl Interrupt for interrupt5::Interrupt5 {
+    #[inline(always)]
+    unsafe fn pend_int() {
+        interrupt5::Pending::set();
+    }
+    #[inline(always)]
+    unsafe fn enable_int() {
+        interrupt5::Enabled::set();
+    }
+    #[inline(always)]
+    unsafe fn disable_int() {
+        interrupt5::Enabled::clear();
+    }
+    #[inline(always)]
+    unsafe fn set_priority(prio: u8) {
+        interrupt5::Priority::set(prio as usize);
+    }
+    #[inline(always)]
+    unsafe fn clear_int() {
+        interrupt5::Pending::clear();
+    }
+}
+
+unsafe impl Interrupt for interrupt6::Interrupt6 {
+    #[inline(always)]
+    unsafe fn pend_int() {
+        interrupt6::Pending::set();
+    }
+    #[inline(always)]
+    unsafe fn enable_int() {
+        interrupt6::Enabled::set();
+    }
+    #[inline(always)]
+    unsafe fn disable_int() {
+        interrupt6::Enabled::clear();
+    }
+    #[inline(always)]
+    unsafe fn set_priority(prio: u8) {
+        interrupt6::Priority::set(prio as usize);
+    }
+    #[inline(always)]
+    unsafe fn clear_int() {
+        interrupt6::Pending::clear();
+    }
+}
+
+unsafe impl Interrupt for interrupt7::Interrupt7 {
+    #[inline(always)]
+    unsafe fn pend_int() {
+        interrupt7::Pending::set();
+    }
+    #[inline(always)]
+    unsafe fn enable_int() {
+        interrupt7::Enabled::set();
+    }
+    #[inline(always)]
+    unsafe fn disable_int() {
+        interrupt7::Enabled::clear();
+    }
+    #[inline(always)]
+    unsafe fn set_priority(prio: u8) {
+        interrupt7::Priority::set(prio as usize);
+    }
+    #[inline(always)]
+    unsafe fn clear_int() {
+        interrupt7::Pending::clear();
+    }
+}
+
