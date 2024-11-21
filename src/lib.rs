@@ -108,25 +108,72 @@ pub struct Timer {
 
 pub struct MPU {
     pub mpu_config: MPUConfig,
+    pub interrupt_0_config: Interrupt0Config,
     pub interrupt_1_config: Interrupt1Config,
-    
+    pub interrupt_2_config: Interrupt0Config,
+    pub interrupt_3_config: Interrupt1Config,
+    pub interrupt_4_config: Interrupt0Config,
+    pub interrupt_5_config: Interrupt1Config,
+    pub interrupt_6_config: Interrupt0Config,
+    pub interrupt_7_config: Interrupt1Config,
     _marker: PhantomData<*const ()>,
 }
 
 pub struct MPUConfig {
     _marker: PhantomData<*const ()>,
 }
+
+pub struct Interrupt0Config {
+    _marker: PhantomData<*const ()>,
+}
 pub struct Interrupt1Config {
     _marker: PhantomData<*const ()>,
 }
-
+pub struct Interrupt2Config {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Interrupt3Config {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Interrupt4Config {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Interrupt5Config {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Interrupt6Config {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Interrupt7Config {
+    _marker: PhantomData<*const ()>,
+}
 impl MPUConfig {
+    //pub fn set_permissions(&mut self, )
+}
+impl Interrupt0Config {
     //pub fn set_permissions(&mut self, )
 }
 impl Interrupt1Config {
     //pub fn set_permissions(&mut self, )
 }
-
+impl Interrupt2Config {
+    //pub fn set_permissions(&mut self, )
+}
+impl Interrupt3Config {
+    //pub fn set_permissions(&mut self, )
+}
+impl Interrupt4Config {
+    //pub fn set_permissions(&mut self, )
+}
+impl Interrupt5Config {
+    //pub fn set_permissions(&mut self, )
+}
+impl Interrupt6Config {
+    //pub fn set_permissions(&mut self, )
+}
+impl Interrupt7Config {
+    //pub fn set_permissions(&mut self, )
+}
 pub struct PinOut {
     pub pout0: Pout0, // Output pins
     pub pout1: Pout1,
