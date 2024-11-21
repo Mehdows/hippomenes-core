@@ -67,7 +67,7 @@ pub mod Interrupt0Config {
     #[width = 16]
     #[offset = 16]
     #[address = 0x402]
-    pub enum Region1Address {}
+    pub enum Region2Address {}
 // --------------------------
     #[derive(CSRAccess)]
     #[width = 16]
