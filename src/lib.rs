@@ -23,6 +23,7 @@ pub mod interrupt5;
 pub mod interrupt6;
 pub mod interrupt7;
 pub mod mintthresh;
+pub mod mpu;
 pub mod mstatus;
 pub mod timer;
 pub mod uart;
@@ -105,18 +106,23 @@ pub struct Timer {
     _marker: PhantomData<*const ()>,
 }
 
+pub struct MPU {
+    pub mpu_config: MPUConfig,
+    pub interrupt_1_config: Interrupt1Config,
+    
+    _marker: PhantomData<*const ()>,
+}
+
 pub struct MPUConfig {
+    _marker: PhantomData<*const ()>,
+}
+pub struct Interrupt1Config {
     _marker: PhantomData<*const ()>,
 }
 
 impl MPUConfig {
     //pub fn set_permissions(&mut self, )
 }
-
-pub struct Interrupt1Config {
-    _marker: PhantomData<*const ()>,
-}
-
 impl Interrupt1Config {
     //pub fn set_permissions(&mut self, )
 }
