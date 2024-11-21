@@ -1,5 +1,5 @@
 #[allow(non_snake_case)]
-pub mod Interrupt1Config {
+pub mod Interrupt0Config {
     #[allow(unused_imports)]
     use core::arch::asm;
     use hippomenes_derive::CSRAccess;
@@ -67,7 +67,7 @@ pub mod Interrupt1Config {
     #[width = 16]
     #[offset = 16]
     #[address = 0x402]
-    pub enum Region2Address {}
+    pub enum Region1Address {}
 // --------------------------
     #[derive(CSRAccess)]
     #[width = 16]
