@@ -6,7 +6,7 @@ pub mod Interrupt0Config {
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x400]
+    #[address = 0x500]
     pub enum Region0Permissions {
         Read = 1,
         Write = 2,
@@ -16,19 +16,19 @@ pub mod Interrupt0Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x400]
+    #[address = 0x500]
     pub enum Region0Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x400]
+    #[address = 0x500]
     pub enum Region0Address {}
 // ---------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x401]
+    #[address = 0x501]
     pub enum Region1Permissions {
         Read = 1,
         Write = 2,
@@ -38,19 +38,19 @@ pub mod Interrupt0Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x401]
+    #[address = 0x501]
     pub enum Region1Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x401]
+    #[address = 0x501]
     pub enum Region1Address {}
 // ------------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x402]
+    #[address = 0x502]
     pub enum Region2Permissions {
         Read = 1,
         Write = 2,
@@ -60,25 +60,25 @@ pub mod Interrupt0Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x402]
+    #[address = 0x502]
     pub enum Region2Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x402]
+    #[address = 0x502]
     pub enum Region2Address {}
 // --------------------------
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x403]
+    #[address = 0x503]
     pub enum Region3Address {}
 
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x403]
+    #[address = 0x503]
     pub enum Region3Permissions {
         Read = 1,
         Write = 2,
@@ -88,7 +88,7 @@ pub mod Interrupt0Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x403]
+    #[address = 0x503]
     pub enum Region3Width {}
 }
 
@@ -99,7 +99,7 @@ pub mod Interrupt1Config {
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x404]
+    #[address = 0x504]
     pub enum Region0Permissions {
         Read = 1,
         Write = 2,
@@ -109,19 +109,19 @@ pub mod Interrupt1Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x404]
+    #[address = 0x504]
     pub enum Region0Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x404]
+    #[address = 0x504]
     pub enum Region0Address {}
 // ---------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x405]
+    #[address = 0x505]
     pub enum Region1Permissions {
         Read = 1,
         Write = 2,
@@ -131,19 +131,19 @@ pub mod Interrupt1Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x405]
+    #[address = 0x505]
     pub enum Region1Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x405]
+    #[address = 0x505]
     pub enum Region1Address {}
 // ------------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x406]
+    #[address = 0x506]
     pub enum Region2Permissions {
         Read = 1,
         Write = 2,
@@ -153,25 +153,25 @@ pub mod Interrupt1Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x406]
+    #[address = 0x506]
     pub enum Region2Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x406]
+    #[address = 0x506]
     pub enum Region2Address {}
 // --------------------------
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x407]
+    #[address = 0x507]
     pub enum Region3Address {}
 
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x407]
+    #[address = 0x507]
     pub enum Region3Permissions {
         Read = 1,
         Write = 2,
@@ -181,7 +181,7 @@ pub mod Interrupt1Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x407]
+    #[address = 0x507]
     pub enum Region3Width {}
 }
 
@@ -192,7 +192,7 @@ pub mod Interrupt2Config {
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x408]
+    #[address = 0x508]
     pub enum Region0Permissions {
         Read = 1,
         Write = 2,
@@ -202,19 +202,19 @@ pub mod Interrupt2Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x408]
+    #[address = 0x508]
     pub enum Region0Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x408]
+    #[address = 0x508]
     pub enum Region0Address {}
 // ---------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x409]
+    #[address = 0x509]
     pub enum Region1Permissions {
         Read = 1,
         Write = 2,
@@ -224,19 +224,19 @@ pub mod Interrupt2Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x409]
+    #[address = 0x509]
     pub enum Region1Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x409]
+    #[address = 0x509]
     pub enum Region1Address {}
 // ------------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x40A]
+    #[address = 0x50A]
     pub enum Region2Permissions {
         Read = 1,
         Write = 2,
@@ -246,25 +246,25 @@ pub mod Interrupt2Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x40A]
+    #[address = 0x50A]
     pub enum Region2Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x40A]
+    #[address = 0x50A]
     pub enum Region2Address {}
 // --------------------------
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x40B]
+    #[address = 0x50B]
     pub enum Region3Address {}
 
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x40B]
+    #[address = 0x50B]
     pub enum Region3Permissions {
         Read = 1,
         Write = 2,
@@ -274,7 +274,7 @@ pub mod Interrupt2Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x40B]
+    #[address = 0x50B]
     pub enum Region3Width {}
 }
 
@@ -285,7 +285,7 @@ pub mod Interrupt3Config {
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x40C]
+    #[address = 0x50C]
     pub enum Region0Permissions {
         Read = 1,
         Write = 2,
@@ -295,19 +295,19 @@ pub mod Interrupt3Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x40C]
+    #[address = 0x50C]
     pub enum Region0Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x40C]
+    #[address = 0x50C]
     pub enum Region0Address {}
 // ---------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x40D]
+    #[address = 0x50D]
     pub enum Region1Permissions {
         Read = 1,
         Write = 2,
@@ -317,19 +317,19 @@ pub mod Interrupt3Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x40D]
+    #[address = 0x50D]
     pub enum Region1Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x40D]
+    #[address = 0x50D]
     pub enum Region1Address {}
 // ------------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x40E]
+    #[address = 0x50E]
     pub enum Region2Permissions {
         Read = 1,
         Write = 2,
@@ -339,25 +339,25 @@ pub mod Interrupt3Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x40E]
+    #[address = 0x50E]
     pub enum Region2Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x40E]
+    #[address = 0x50E]
     pub enum Region2Address {}
 // --------------------------
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x40F]
+    #[address = 0x50F]
     pub enum Region3Address {}
 
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x40F]
+    #[address = 0x50F]
     pub enum Region3Permissions {
         Read = 1,
         Write = 2,
@@ -367,7 +367,7 @@ pub mod Interrupt3Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x40F]
+    #[address = 0x50F]
     pub enum Region3Width {}
 }
 
@@ -378,7 +378,7 @@ pub mod Interrupt4Config {
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x410]
+    #[address = 0x510]
     pub enum Region0Permissions {
         Read = 1,
         Write = 2,
@@ -388,19 +388,19 @@ pub mod Interrupt4Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x410]
+    #[address = 0x510]
     pub enum Region0Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x410]
+    #[address = 0x510]
     pub enum Region0Address {}
 // ---------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x411]
+    #[address = 0x511]
     pub enum Region1Permissions {
         Read = 1,
         Write = 2,
@@ -410,19 +410,19 @@ pub mod Interrupt4Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x411]
+    #[address = 0x511]
     pub enum Region1Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x411]
+    #[address = 0x511]
     pub enum Region1Address {}
 // ------------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x412]
+    #[address = 0x512]
     pub enum Region2Permissions {
         Read = 1,
         Write = 2,
@@ -432,25 +432,25 @@ pub mod Interrupt4Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x412]
+    #[address = 0x512]
     pub enum Region2Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x412]
+    #[address = 0x512]
     pub enum Region2Address {}
 // --------------------------
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x413]
+    #[address = 0x513]
     pub enum Region3Address {}
 
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x413]
+    #[address = 0x513]
     pub enum Region3Permissions {
         Read = 1,
         Write = 2,
@@ -460,7 +460,7 @@ pub mod Interrupt4Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x413]
+    #[address = 0x513]
     pub enum Region3Width {}
 }
 
@@ -471,7 +471,7 @@ pub mod Interrupt5Config {
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x414]
+    #[address = 0x514]
     pub enum Region0Permissions {
         Read = 1,
         Write = 2,
@@ -481,19 +481,19 @@ pub mod Interrupt5Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x414]
+    #[address = 0x514]
     pub enum Region0Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x414]
+    #[address = 0x514]
     pub enum Region0Address {}
 // ---------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x415]
+    #[address = 0x515]
     pub enum Region1Permissions {
         Read = 1,
         Write = 2,
@@ -503,19 +503,19 @@ pub mod Interrupt5Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x415]
+    #[address = 0x515]
     pub enum Region1Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x415]
+    #[address = 0x515]
     pub enum Region1Address {}
 // ------------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x416]
+    #[address = 0x516]
     pub enum Region2Permissions {
         Read = 1,
         Write = 2,
@@ -525,25 +525,25 @@ pub mod Interrupt5Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x416]
+    #[address = 0x516]
     pub enum Region2Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x416]
+    #[address = 0x516]
     pub enum Region2Address {}
 // --------------------------
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x417]
+    #[address = 0x517]
     pub enum Region3Address {}
 
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x417]
+    #[address = 0x517]
     pub enum Region3Permissions {
         Read = 1,
         Write = 2,
@@ -553,7 +553,7 @@ pub mod Interrupt5Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x417]
+    #[address = 0x517]
     pub enum Region3Width {}
 }
 
@@ -564,7 +564,7 @@ pub mod Interrupt6Config {
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x418]
+    #[address = 0x518]
     pub enum Region0Permissions {
         Read = 1,
         Write = 2,
@@ -574,19 +574,19 @@ pub mod Interrupt6Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x418]
+    #[address = 0x518]
     pub enum Region0Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x418]
+    #[address = 0x518]
     pub enum Region0Address {}
 // ---------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x419]
+    #[address = 0x519]
     pub enum Region1Permissions {
         Read = 1,
         Write = 2,
@@ -596,19 +596,19 @@ pub mod Interrupt6Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x419]
+    #[address = 0x519]
     pub enum Region1Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x419]
+    #[address = 0x519]
     pub enum Region1Address {}
 // ------------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x41A]
+    #[address = 0x51A]
     pub enum Region2Permissions {
         Read = 1,
         Write = 2,
@@ -618,25 +618,25 @@ pub mod Interrupt6Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x41A]
+    #[address = 0x51A]
     pub enum Region2Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x41A]
+    #[address = 0x51A]
     pub enum Region2Address {}
 // --------------------------
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x41B]
+    #[address = 0x51B]
     pub enum Region3Address {}
 
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x41B]
+    #[address = 0x51B]
     pub enum Region3Permissions {
         Read = 1,
         Write = 2,
@@ -646,7 +646,7 @@ pub mod Interrupt6Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x41B]
+    #[address = 0x51B]
     pub enum Region3Width {}
 }
 
@@ -657,7 +657,7 @@ pub mod Interrupt7Config {
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x41C]
+    #[address = 0x51C]
     pub enum Region0Permissions {
         Read = 1,
         Write = 2,
@@ -667,19 +667,19 @@ pub mod Interrupt7Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x41C]
+    #[address = 0x51C]
     pub enum Region0Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x41C]
+    #[address = 0x51C]
     pub enum Region0Address {}
 // ---------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x41D]
+    #[address = 0x51D]
     pub enum Region1Permissions {
         Read = 1,
         Write = 2,
@@ -689,19 +689,19 @@ pub mod Interrupt7Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x41D]
+    #[address = 0x51D]
     pub enum Region1Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x41D]
+    #[address = 0x51D]
     pub enum Region1Address {}
 // ------------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x41E]
+    #[address = 0x51E]
     pub enum Region2Permissions {
         Read = 1,
         Write = 2,
@@ -711,25 +711,25 @@ pub mod Interrupt7Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x41E]
+    #[address = 0x51E]
     pub enum Region2Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x41E]
+    #[address = 0x51E]
     pub enum Region2Address {}
 // --------------------------
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x41F]
+    #[address = 0x51F]
     pub enum Region3Address {}
 
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x41F]
+    #[address = 0x51F]
     pub enum Region3Permissions {
         Read = 1,
         Write = 2,
@@ -739,7 +739,7 @@ pub mod Interrupt7Config {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x41F]
+    #[address = 0x51F]
     pub enum Region3Width {}
 }
 
@@ -750,7 +750,7 @@ pub mod MPUConfig {
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x420]
+    #[address = 0x520]
     pub enum Region0Permissions {
         Read = 1,
         Write = 2,
@@ -760,19 +760,19 @@ pub mod MPUConfig {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x420]
+    #[address = 0x520]
     pub enum Region0Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x420]
+    #[address = 0x520]
     pub enum Region0Address {}
 // ---------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x421]
+    #[address = 0x521]
     pub enum Region1Permissions {
         Read = 1,
         Write = 2,
@@ -782,19 +782,19 @@ pub mod MPUConfig {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x421]
+    #[address = 0x521]
     pub enum Region1Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x421]
+    #[address = 0x521]
     pub enum Region1Address {}
 // ------------------------------------
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x422]
+    #[address = 0x522]
     pub enum Region2Permissions {
         Read = 1,
         Write = 2,
@@ -804,25 +804,25 @@ pub mod MPUConfig {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x422]
+    #[address = 0x522]
     pub enum Region2Width {}
 
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x422]
+    #[address = 0x522]
     pub enum Region2Address {}
 // --------------------------
     #[derive(CSRAccess)]
     #[width = 16]
     #[offset = 16]
-    #[address = 0x423]
+    #[address = 0x523]
     pub enum Region3Address {}
 
     #[derive(CSRAccess)]
     #[width = 2]
     #[offset = 0]
-    #[address = 0x423]
+    #[address = 0x523]
     pub enum Region3Permissions {
         Read = 1,
         Write = 2,
@@ -832,6 +832,6 @@ pub mod MPUConfig {
     #[derive(CSRAccess)]
     #[width = 14]
     #[offset = 2]
-    #[address = 0x423]
+    #[address = 0x523]
     pub enum Region3Width {}
 }
